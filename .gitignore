@@ -3,7 +3,9 @@ build
 test
 src/**.js
 .idea/*
+.env
 
+data
 coverage
 .nyc_output
 *.log

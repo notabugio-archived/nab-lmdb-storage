@@ -1,15 +1,16 @@
 {
-  "name": "nab-lmdb-storage",
-  "version": "1.0.0",
+  "name": "@notabug/nab-lmdb-storage",
+  "version": "0.0.1",
   "description": "LMDB Persistence for notabug.io",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
-  "repository": "https://github.com/go1dfish/nab-lmdb-storage",
+  "repository": "https://github.com/notabugio/nab-lmdb-storage",
   "license": "MIT",
   "keywords": [],
   "scripts": {
     "describe": "npm-scripts-info",
+    "start": "node -r dotenv/config build/main/index.js",
     "build": "run-s clean && run-p build:*",
     "build:main": "tsc -p tsconfig.json",
     "build:module": "tsc -p tsconfig.module.json",
@@ -51,7 +52,15 @@
     "node": ">=8.9"
   },
   "dependencies": {
-    "sha.js": "^2.4.11"
+    "@notabug/chaingun": "^0.0.11",
+    "@notabug/chaingun-lmdb": "^0.0.3",
+    "@notabug/chaingun-socket-cluster-connector": "^0.0.1",
+    "@notabug/gun-scope": "^0.10.1",
+    "@notabug/peer": "^0.32.2",
+    "@types/ws": "^6.0.3",
+    "dotenv": "^8.1.0",
+    "sha.js": "^2.4.11",
+    "ws": "^7.1.2"
   },
   "devDependencies": {
     "@bitjson/npm-scripts-info": "^1.0.0",
@@ -74,12 +83,8 @@
   },
   "ava": {
     "failFast": true,
-    "files": [
-      "build/main/**/*.spec.js"
-    ],
-    "sources": [
-      "build/main/**/*.js"
-    ]
+    "files": ["build/main/**/*.spec.js"],
+    "sources": ["build/main/**/*.js"]
   },
   "config": {
     "commitizen": {
@@ -91,8 +96,6 @@
   },
   "nyc": {
     "extends": "@istanbuljs/nyc-config-typescript",
-    "exclude": [
-      "**/*.spec.js"
-    ]
+    "exclude": ["**/*.spec.js"]
   }
 }
