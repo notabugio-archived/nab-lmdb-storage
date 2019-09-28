@@ -1,4 +1,4 @@
-import { ChainGun, GunGraph, diffGunCRDT } from "@notabug/chaingun"
+import { ChainGun, GunGraph } from "@notabug/chaingun"
 import { NabLmdbGraphConnector } from "./NabLmdbGraphConnector"
 import SocketClusterGraphConnector from "@notabug/chaingun-socket-cluster-connector"
 import WS from "ws"
@@ -6,7 +6,6 @@ import { Schema } from "@notabug/peer"
 
 interface Opts extends GunChainOptions {
   socketCluster: any
-  enforceCRDT?: boolean
   lmdb?: any
 }
 
@@ -23,7 +22,6 @@ const DEFAULT_OPTS: Opts = {
       maxDelay: 500
     }
   },
-  enforceCRDT: false,
   lmdb: {
     path: "./data",
     mapSize: 1024 ** 4
@@ -37,7 +35,7 @@ export class Gun extends ChainGun {
   socket: SocketClusterGraphConnector
 
   constructor(options = DEFAULT_OPTS) {
-    const { enforceCRDT, socketCluster: scOpts, lmdb: lmdbOpts, ...opts } = {
+    const { socketCluster: scOpts, lmdb: lmdbOpts, ...opts } = {
       ...DEFAULT_OPTS,
       ...options
     }
@@ -45,11 +43,6 @@ export class Gun extends ChainGun {
     const graph = new GunGraph()
     const lmdb = new NabLmdbGraphConnector(lmdbOpts)
     const socket = new SocketClusterGraphConnector(options.socketCluster)
-
-    if (enforceCRDT) {
-      graph.use(diffGunCRDT)
-      graph.use(diffGunCRDT, "write")
-    }
 
     graph.connect(socket)
     graph.connect(lmdb)
@@ -59,6 +52,7 @@ export class Gun extends ChainGun {
     this.lmdb = lmdb
     this.socket = socket
 
+    this.publishDiff = this.publishDiff.bind(this)
     this.authenticateAndListen()
     this.persistIncoming()
     this.respondToGets()
@@ -70,48 +64,84 @@ export class Gun extends ChainGun {
         .authenticate(process.env.GUN_SC_PUB, process.env.GUN_SC_PRIV)
         .then(() => {
           console.log(`Logged in as ${process.env.GUN_SC_PUB}`)
-          this.socket.subscribeToChannel("gun/get/validated")
-          this.socket.subscribeToChannel("gun/put/validated")
         })
         .catch(err => console.error("Error logging in:", err.stack || err))
     }
   }
 
   respondToGets() {
-    this.socket.events.receiveMessage.on(msg => {
-      if (msg && !msg.get && !msg.put) console.log("msg", msg)
+    this.socket.subscribeToChannel(
+      "gun/get/validated",
+      (msg: GunMsg) => {
+        if (msg && !msg.get && !msg.put) console.log("msg", msg)
+        if (!msg) return
+        const msgId = msg["#"]
+        const soul = (msg.get && msg.get["#"]) || ""
+        if (!soul) return
+        this.lmdb.get({
+          soul,
+          msgId,
+          cb: (m: GunMsg) => this.socket.publishToChannel(`gun/@${msgId}`, m)
+        })
+      },
+      { waitForAuth: true }
+    )
+  }
+
+  persistIncoming() {
+    this.socket.subscribeToChannel("gun/put/validated", (msg: GunMsg) => {
       if (!msg) return
+      const data = msg.put
+      if (!data) return
       const msgId = msg["#"]
-      const soul = (msg.get && msg.get["#"]) || ""
-      if (!soul) return
-      this.lmdb.get({
-        soul,
+      const putGraph: GunPut = {}
+      let hasNodes = false
+
+      for (let soul in data) {
+        const node = data[soul]
+        if (node) {
+          putGraph[soul] = node
+          hasNodes = true
+        }
+      }
+
+      if (!hasNodes) return
+
+      this.lmdb.put({
         msgId,
-        cb: (m: GunMsg) => this.socket.send([m])
+        graph: putGraph,
+        diffCb: this.publishDiff,
+        cb: m => this.socket.publishToChannel(`gun/@${msgId}`, m)
       })
     })
   }
 
-  persistIncoming() {
-    this.graph.graphData.on((data, msgId) => {
-      if (!data) return
-      const putGraph: GunPut = {}
-      const souls = Object.keys(data)
+  publishDiff(msg: GunMsg) {
+    const msgId = msg["#"]
+    const diff = msg.put
+    if (!diff) return
+    this.socket.publishToChannel("gun/put/diff", msg)
+    const souls = Object.keys(diff)
 
-      for (let i = 0; i < souls.length; i++) {
-        const soul = souls[i]
-        const node = data[soul]
-        if (node) putGraph[soul] = node
-      }
+    if (souls.length === 1) {
+      // No need to split into multiple messages
+      const soul = souls[0]
+      if (!diff[soul]) return
+      this.socket.publishToChannel(`gun/nodes/${soul}`, msg)
+      return
+    }
 
-      if (Object.keys(putGraph).length) {
-        this.lmdb.put({
-          msgId,
-          graph: putGraph,
-          cb: m => m && this.socket.send([m])
-        })
-      }
-    })
+    for (let i = 0; i < souls.length; i++) {
+      const soul = souls[i]
+      const nodeDiff = diff[soul]
+      if (!nodeDiff) continue
+      this.socket.publishToChannel(`gun/nodes/${soul}`, {
+        "#": `${msgId}/${soul}`,
+        put: {
+          [soul]: nodeDiff
+        }
+      })
+    }
   }
 
   uploadThing(thingId: string): Promise<void> {

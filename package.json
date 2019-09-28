@@ -53,9 +53,8 @@
   },
   "dependencies": {
     "@notabug/chaingun": "^0.0.11",
-    "@notabug/chaingun-lmdb": "^0.0.3",
+    "@notabug/chaingun-lmdb": "^0.0.4",
     "@notabug/chaingun-socket-cluster-connector": "^0.0.1",
-    "@notabug/gun-scope": "^0.10.1",
     "@notabug/peer": "^0.32.2",
     "@types/ws": "^6.0.3",
     "dotenv": "^8.1.0",
@@ -83,8 +82,12 @@
   },
   "ava": {
     "failFast": true,
-    "files": ["build/main/**/*.spec.js"],
-    "sources": ["build/main/**/*.js"]
+    "files": [
+      "build/main/**/*.spec.js"
+    ],
+    "sources": [
+      "build/main/**/*.js"
+    ]
   },
   "config": {
     "commitizen": {
@@ -96,6 +99,8 @@
   },
   "nyc": {
     "extends": "@istanbuljs/nyc-config-typescript",
-    "exclude": ["**/*.spec.js"]
+    "exclude": [
+      "**/*.spec.js"
+    ]
   }
 }

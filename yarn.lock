@@ -325,10 +325,10 @@
     "@nodelib/fs.scandir" "2.1.2"
     fastq "^1.6.0"
 
-"@notabug/chaingun-lmdb@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@notabug/chaingun-lmdb/-/chaingun-lmdb-0.0.3.tgz#ee41820df55e1b383fc28ce5cf64e031d4ba06a6"
-  integrity sha512-oIWzZ4DpiN853TfE8F2L2uipEsZcHPzBAsgi2TMIUClldZ+ycudCLomVh/C/uqOlLNAkO+mWdFXlNUxtLeSjDg==
+"@notabug/chaingun-lmdb@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@notabug/chaingun-lmdb/-/chaingun-lmdb-0.0.4.tgz#38ed32593229d0a83a577de073d85148b2856d15"
+  integrity sha512-W3Ea6TvoWWORNr5WwteWkSUyMwfKlBy+jchUffJYC+9tfpQgHvVdRwm5yDTf75UbH1Fs4jLnKnGi0BP5HNzK6Q==
   dependencies:
     "@notabug/chaingun" "^0.0.11"
     node-lmdb "^0.7.0"
@@ -350,7 +350,7 @@
   dependencies:
     reconnecting-websocket "^4.2.0"
 
-"@notabug/gun-scope@^0.10.0", "@notabug/gun-scope@^0.10.1":
+"@notabug/gun-scope@^0.10.0":
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/@notabug/gun-scope/-/gun-scope-0.10.1.tgz#ee8260db765ab5905faf12f2a94a4afded9955d8"
   integrity sha512-/vtX2GU7s4p6IjpHxqYqzp+vX3wR6GNiNRfpNmrp9oe9DFw+ktWUSeytWnYB7Y/Jh2DFXDriltpZSiec3E9hzA==
