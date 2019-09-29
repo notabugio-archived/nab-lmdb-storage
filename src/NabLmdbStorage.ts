@@ -13,8 +13,8 @@ const DEFAULT_OPTS: Opts = {
   WS,
   peers: [],
   socketCluster: {
-    hostname: "127.0.0.1",
-    port: 4444,
+    hostname: process.env.GUN_SC_HOST || "localhost",
+    port: process.env.GUN_SC_PORT || "4444",
     autoReconnect: true,
     autoReconnectOptions: {
       initialDelay: 1,
