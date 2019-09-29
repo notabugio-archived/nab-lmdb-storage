@@ -325,18 +325,18 @@
     "@nodelib/fs.scandir" "2.1.2"
     fastq "^1.6.0"
 
-"@notabug/chaingun-lmdb@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@notabug/chaingun-lmdb/-/chaingun-lmdb-0.0.4.tgz#38ed32593229d0a83a577de073d85148b2856d15"
-  integrity sha512-W3Ea6TvoWWORNr5WwteWkSUyMwfKlBy+jchUffJYC+9tfpQgHvVdRwm5yDTf75UbH1Fs4jLnKnGi0BP5HNzK6Q==
+"@notabug/chaingun-lmdb@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@notabug/chaingun-lmdb/-/chaingun-lmdb-0.0.5.tgz#158cb1caf11ad083c1293b79e9c119730ebf5ff5"
+  integrity sha512-EERN9+rGXqik2dcgj8UGIQdkVqqm98JD54wx6dS/wKG0G9GgjcuZGdWo4GsvybGWrVsdIfttOgz/5Ogwgm0PkA==
   dependencies:
     "@notabug/chaingun" "^0.0.11"
     node-lmdb "^0.7.0"
 
-"@notabug/chaingun-socket-cluster-connector@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@notabug/chaingun-socket-cluster-connector/-/chaingun-socket-cluster-connector-0.0.1.tgz#1382b2d5b8b5c52b16d06e8f9bb79d8ad09d3f89"
-  integrity sha512-WOZzoTu2cy5o1JZMDX4vW7tVSRSxs6sNwDX3okF2WQkeB+ZKh6SqR2smCG4JZWfVqC3uMehWM5oXRLTh3FWVzA==
+"@notabug/chaingun-socket-cluster-connector@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@notabug/chaingun-socket-cluster-connector/-/chaingun-socket-cluster-connector-0.0.2.tgz#58338453ba568e3b90d7ec97626ae4b31a0bfef6"
+  integrity sha512-KNSaTUVz1Oaz3s1pqcN4Mve2nwhD96waMQX77DE9CHVlb5SkRjay11A63a9UJK7vL7jlx6Z6TTfLr6k3xqox/A==
   dependencies:
     "@notabug/chaingun" "^0.0.11"
     "@notabug/gun-sear" "^0.0.14"
@@ -347,6 +347,13 @@
   version "0.0.11"
   resolved "https://registry.yarnpkg.com/@notabug/chaingun/-/chaingun-0.0.11.tgz#8778b899bee75c41c37d6f429fe6ee3b46d816a1"
   integrity sha512-Jv684irb3UgSxMHohkJzGzAZ5ESkKvkJt1KRwuzYPcW7iPDc9mv7kC26Yko1nPWIphf4FDgApFBLfR254QL75g==
+  dependencies:
+    reconnecting-websocket "^4.2.0"
+
+"@notabug/chaingun@^0.0.12":
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/@notabug/chaingun/-/chaingun-0.0.12.tgz#fcc1ddcd70af0201d0129f4eafbbdc0dc79f0d37"
+  integrity sha512-StpfRcBO3n8Sn4fXPxPE0WkLDI6zKZMhhybEvozTlQ1iT2WZsdb0mazBaF80OJXLv2tGxwROxZKTMDNuQlvD8w==
   dependencies:
     reconnecting-websocket "^4.2.0"
 
@@ -386,10 +393,10 @@
     ramda "^0.26.1"
     route-parser "^0.0.5"
 
-"@notabug/peer@^0.32.2":
-  version "0.32.2"
-  resolved "https://registry.yarnpkg.com/@notabug/peer/-/peer-0.32.2.tgz#cabd9deec563f862de3514eb8c936cc54c9a5114"
-  integrity sha512-gEK0E7tTPyqkkJjgG659CO2wq/k+bWPJHBIHm2WJmXB5+Zr/lYxnE0+I4Zv4mDpJMvlMS9VytcZO7J54vHxVOQ==
+"@notabug/peer@^0.33.0":
+  version "0.33.0"
+  resolved "https://registry.yarnpkg.com/@notabug/peer/-/peer-0.33.0.tgz#a4896e84faca2d85f635c35e787d57298d0a75c0"
+  integrity sha512-AvxDi+DR6zqUfc7dxHMmViA795/mybTOqrO5yMy49S4a0r/ibFkfeKVzIvDYXtPh3/z7AyMF9jwVoY/klx0jzA==
   dependencies:
     "@notabug/gun-scope" "^0.10.0"
     "@notabug/gun-suppressor" "^0.2.2"

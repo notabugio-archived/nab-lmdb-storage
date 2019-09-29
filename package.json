@@ -1,6 +1,6 @@
 {
   "name": "@notabug/nab-lmdb-storage",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "LMDB Persistence for notabug.io",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
@@ -10,7 +10,7 @@
   "keywords": [],
   "scripts": {
     "describe": "npm-scripts-info",
-    "start": "node -r dotenv/config build/main/index.js",
+    "start": "node -r dotenv/config build/main/main.js",
     "build": "run-s clean && run-p build:*",
     "build:main": "tsc -p tsconfig.json",
     "build:module": "tsc -p tsconfig.module.json",
@@ -52,10 +52,10 @@
     "node": ">=8.9"
   },
   "dependencies": {
-    "@notabug/chaingun": "^0.0.11",
-    "@notabug/chaingun-lmdb": "^0.0.4",
-    "@notabug/chaingun-socket-cluster-connector": "^0.0.1",
-    "@notabug/peer": "^0.32.2",
+    "@notabug/chaingun": "^0.0.12",
+    "@notabug/chaingun-lmdb": "^0.0.5",
+    "@notabug/chaingun-socket-cluster-connector": "^0.0.2",
+    "@notabug/peer": "^0.33.0",
     "@types/ws": "^6.0.3",
     "dotenv": "^8.1.0",
     "sha.js": "^2.4.11",
@@ -82,12 +82,8 @@
   },
   "ava": {
     "failFast": true,
-    "files": [
-      "build/main/**/*.spec.js"
-    ],
-    "sources": [
-      "build/main/**/*.js"
-    ]
+    "files": ["build/main/**/*.spec.js"],
+    "sources": ["build/main/**/*.js"]
   },
   "config": {
     "commitizen": {
@@ -99,8 +95,6 @@
   },
   "nyc": {
     "extends": "@istanbuljs/nyc-config-typescript",
-    "exclude": [
-      "**/*.spec.js"
-    ]
+    "exclude": ["**/*.spec.js"]
   }
 }

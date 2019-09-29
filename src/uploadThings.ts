@@ -1,4 +1,4 @@
-import { Gun } from "./Gun"
+import { NabLmdbStorage } from "./NabLmdbStorage"
 
-const gun = new Gun()
+const gun = new NabLmdbStorage()
 setTimeout(() => gun.uploadThings(), 1000)

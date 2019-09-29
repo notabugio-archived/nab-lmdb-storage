@@ -30,7 +30,7 @@ const DEFAULT_OPTS: Opts = {
 
 const promiseNothing = Promise.resolve(undefined)
 
-export class Gun extends ChainGun {
+export class NabLmdbStorage extends ChainGun {
   lmdb: NabLmdbGraphConnector
   socket: SocketClusterGraphConnector
 
@@ -44,8 +44,8 @@ export class Gun extends ChainGun {
     const lmdb = new NabLmdbGraphConnector(lmdbOpts)
     const socket = new SocketClusterGraphConnector(options.socketCluster)
 
-    graph.connect(socket)
-    graph.connect(lmdb)
+    graph.connect(socket as any)
+    graph.connect(lmdb as any)
 
     super({ graph, ...opts })
 
@@ -81,7 +81,9 @@ export class Gun extends ChainGun {
         this.lmdb.get({
           soul,
           msgId,
-          cb: (m: GunMsg) => this.socket.publishToChannel(`gun/@${msgId}`, m)
+          cb: (m: GunMsg) => {
+            this.socket.publishToChannel(`gun/@${msgId}`, m)
+          }
         })
       },
       { waitForAuth: true }
