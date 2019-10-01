@@ -44,9 +44,6 @@ export class NabLmdbStorage extends ChainGun {
     const lmdb = new NabLmdbGraphConnector(lmdbOpts)
     const socket = new SocketClusterGraphConnector(options.socketCluster)
 
-    graph.connect(socket as any)
-    graph.connect(lmdb as any)
-
     super({ graph, ...opts })
 
     this.lmdb = lmdb
@@ -82,6 +79,7 @@ export class NabLmdbStorage extends ChainGun {
           soul,
           msgId,
           cb: (m: GunMsg) => {
+            if (!m.put) this.socket.publishToChannel("gun/get/missing", msg)
             this.socket.publishToChannel(`gun/@${msgId}`, m)
           }
         })
@@ -172,8 +170,6 @@ export class NabLmdbStorage extends ChainGun {
         },
         cb
       })
-
-      setTimeout(() => cb(false), 10)
     })
   }
 
