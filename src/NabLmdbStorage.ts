@@ -1,8 +1,8 @@
-import { ChainGun, GunGraph } from "@notabug/chaingun"
-import { NabLmdbGraphConnector } from "./NabLmdbGraphConnector"
-import SocketClusterGraphConnector from "@notabug/chaingun-socket-cluster-connector"
-import WS from "ws"
-import { Schema } from "@notabug/peer"
+import { ChainGun, GunGraph } from '@notabug/chaingun'
+import { NabLmdbGraphConnector } from './NabLmdbGraphConnector'
+import SocketClusterGraphConnector from '@notabug/chaingun-socket-cluster-connector'
+import WS from 'ws'
+import { Schema } from '@notabug/peer'
 
 interface Opts extends GunChainOptions {
   socketCluster: any
@@ -13,8 +13,8 @@ const DEFAULT_OPTS: Opts = {
   WS,
   peers: [],
   socketCluster: {
-    hostname: process.env.GUN_SC_HOST || "localhost",
-    port: process.env.GUN_SC_PORT || "4444",
+    hostname: process.env.GUN_SC_HOST || 'localhost',
+    port: process.env.GUN_SC_PORT || '4444',
     autoReconnect: true,
     autoReconnectOptions: {
       initialDelay: 1,
@@ -23,7 +23,7 @@ const DEFAULT_OPTS: Opts = {
     }
   },
   lmdb: {
-    path: "./data",
+    path: './data',
     mapSize: 1024 ** 4
   }
 }
@@ -62,24 +62,24 @@ export class NabLmdbStorage extends ChainGun {
         .then(() => {
           console.log(`Logged in as ${process.env.GUN_SC_PUB}`)
         })
-        .catch(err => console.error("Error logging in:", err.stack || err))
+        .catch(err => console.error('Error logging in:', err.stack || err))
     }
   }
 
   respondToGets() {
     this.socket.subscribeToChannel(
-      "gun/get/validated",
+      'gun/get/validated',
       (msg: GunMsg) => {
-        if (msg && !msg.get && !msg.put) console.log("msg", msg)
+        if (msg && !msg.get && !msg.put) console.log('msg', msg)
         if (!msg) return
-        const msgId = msg["#"]
-        const soul = (msg.get && msg.get["#"]) || ""
+        const msgId = msg['#']
+        const soul = (msg.get && msg.get['#']) || ''
         if (!soul) return
         this.lmdb.get({
           soul,
           msgId,
           cb: (m: GunMsg) => {
-            if (!m.put) this.socket.publishToChannel("gun/get/missing", msg)
+            if (!m.put) this.socket.publishToChannel('gun/get/missing', msg)
             this.socket.publishToChannel(`gun/@${msgId}`, m)
           }
         })
@@ -89,11 +89,11 @@ export class NabLmdbStorage extends ChainGun {
   }
 
   persistIncoming() {
-    this.socket.subscribeToChannel("gun/put/validated", (msg: GunMsg) => {
+    this.socket.subscribeToChannel('gun/put/validated', (msg: GunMsg) => {
       if (!msg) return
       const data = msg.put
       if (!data) return
-      const msgId = msg["#"]
+      const msgId = msg['#']
       const putGraph: GunPut = {}
       let hasNodes = false
 
@@ -117,10 +117,10 @@ export class NabLmdbStorage extends ChainGun {
   }
 
   publishDiff(msg: GunMsg) {
-    const msgId = msg["#"]
+    const msgId = msg['#']
     const diff = msg.put
     if (!diff) return
-    this.socket.publishToChannel("gun/put/diff", msg)
+    this.socket.publishToChannel('gun/put/diff', msg)
     const souls = Object.keys(diff)
 
     if (souls.length === 1) {
@@ -136,7 +136,7 @@ export class NabLmdbStorage extends ChainGun {
       const nodeDiff = diff[soul]
       if (!nodeDiff) continue
       this.socket.publishToChannel(`gun/nodes/${soul}`, {
-        "#": `${msgId}/${soul}`,
+        '#': `${msgId}/${soul}`,
         put: {
           [soul]: nodeDiff
         }
@@ -152,14 +152,14 @@ export class NabLmdbStorage extends ChainGun {
     if (!thing) {
       return promiseNothing
     }
-    const dataSoul = thing.data && thing.data["#"]
+    const dataSoul = thing.data && thing.data['#']
     if (!dataSoul) return promiseNothing
     const thingData = this.lmdb.readNode(dataSoul)
     if (!thingData) return promiseNothing
 
     return new Promise(ok => {
       const cb = (ack: any) => {
-        if (this.socket.isConnected) console.log("uploaded", thingId, ack)
+        if (this.socket.isConnected) console.log('uploaded', thingId, ack)
         ok()
         off()
       }
@@ -175,5 +175,28 @@ export class NabLmdbStorage extends ChainGun {
 
   uploadThings() {
     this.lmdb.eachThingIdAsync(this.uploadThing.bind(this))
+  }
+
+  scanThings(terms: string) {
+    const re = new RegExp(terms, "i")
+    this.lmdb.eachThingId(thingId => {
+      const thingSoul = Schema.Thing.route.reverse({
+        thingId
+      })
+      const thing = this.lmdb.readNode(thingSoul)
+      if (!thing) {
+        return
+      }
+      const dataSoul = thing.data && thing.data['#']
+      if (!dataSoul) return
+      const thingData = this.lmdb.readNode(dataSoul)
+      if (!thingData) return
+      const body = thingData.body || ''
+      const title = thingData.title || ''
+
+      if (re.test(body) || re.test(title)) {
+        console.log('thing Matches', thingId, thingData)
+      }
+    })
   }
 }

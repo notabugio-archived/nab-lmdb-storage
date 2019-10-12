@@ -1,6 +1,6 @@
 {
   "name": "@notabug/nab-lmdb-storage",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "LMDB Persistence for notabug.io",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
@@ -95,7 +95,8 @@
     }
   },
   "prettier": {
-    "singleQuote": true
+    "singleQuote": true,
+    "semi": false
   },
   "nyc": {
     "extends": "@istanbuljs/nyc-config-typescript",
