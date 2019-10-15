@@ -350,6 +350,13 @@
   dependencies:
     reconnecting-websocket "^4.2.0"
 
+"@notabug/chaingun@^0.0.18":
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/@notabug/chaingun/-/chaingun-0.0.18.tgz#eb4bf0f527c5dabe06aeab9f95198608b9231b4f"
+  integrity sha512-GyGff8gSG0PbftJ94KgFVyirbmRoGVtn/xOvCr6zquie01qTQCe65vHj0XTjPFNKD0L0Gb9Lqb2F69L7nl35JA==
+  dependencies:
+    reconnecting-websocket "^4.2.0"
+
 "@notabug/gun-scope@^0.10.0":
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/@notabug/gun-scope/-/gun-scope-0.10.1.tgz#ee8260db765ab5905faf12f2a94a4afded9955d8"

@@ -1,3 +1,7 @@
-import { NabLmdbStorage } from "./NabLmdbStorage"
+import { NabLmdbStorage } from './NabLmdbStorage'
 
-new NabLmdbStorage()
+const storage = new NabLmdbStorage()
+storage.authenticate().then(() => {
+  storage.persistIncoming()
+  storage.respondToGets()
+})
