@@ -1,6 +1,6 @@
 {
   "name": "@notabug/nab-lmdb-storage",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "LMDB Persistence for notabug.io",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
@@ -55,15 +55,9 @@
     "@chaingun/http-server": "^0.0.1",
     "@chaingun/lmdb-adapter": "^0.0.8",
     "@chaingun/types": "^0.0.3",
-    "@notabug/chaingun": "^0.0.18",
-    "@notabug/chaingun-lmdb": "^0.0.6",
-    "@notabug/chaingun-socket-cluster-connector": "^0.0.3",
     "@notabug/nab-wire-validation": "^0.0.6",
-    "@notabug/peer": "^0.36.1",
-    "@types/ws": "^6.0.3",
     "dotenv": "^8.1.0",
-    "gun": "^0.2019.930",
-    "ws": "^7.1.2"
+    "gun": "^0.2019.930"
   },
   "devDependencies": {
     "@bitjson/npm-scripts-info": "^1.0.0",
