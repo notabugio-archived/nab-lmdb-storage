@@ -404,15 +404,15 @@
     ramda "^0.26.1"
     route-parser "^0.0.5"
 
-"@notabug/nab-wire-validation@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@notabug/nab-wire-validation/-/nab-wire-validation-0.0.9.tgz#72f0dd3799a8648ca5dc351e68faff528041b5d6"
-  integrity sha512-1OloNjv7oGG+H4g7o2eaIVp7ZbFLeugzXjyDLtwocFSO1gp93gSVkiNBtoqinXDNJUhHOP0dL1RVC9O0NtbhpQ==
+"@notabug/nab-wire-validation@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@notabug/nab-wire-validation/-/nab-wire-validation-0.0.10.tgz#3b74a123ade99aea4cbbc45dbac72441a85446fa"
+  integrity sha512-/uPFRXGMDLDOXztJCK0R4zm2ZbMnw+thmEFmR6B08V+JTubKZAbFYLKN+V62UesiyBqtPhPPpSrNDUTZNSefYA==
   dependencies:
     "@notabug/chaingun" "^0.0.18"
     "@notabug/gun-sear" "^0.0.22"
     "@notabug/gun-suppressor-sear" "^0.3.1"
-    "@notabug/peer" "^0.39.2"
+    "@notabug/peer" "^0.39.3"
     dotenv "^8.1.0"
     gun "^0.2019.915"
     object-hash "^1.3.1"
@@ -420,10 +420,10 @@
     route-parser "^0.0.5"
     socketcluster-client "^14.3.1"
 
-"@notabug/peer@^0.39.2":
-  version "0.39.2"
-  resolved "https://registry.yarnpkg.com/@notabug/peer/-/peer-0.39.2.tgz#0d7eb773e7379698f3925ad2511e7fcdcd87fab8"
-  integrity sha512-sRyBeWvIYhHN0XWJL8WQgrOjcW7hrg+AFbXMmvEHU+15TpZsgmAo3ZaBTHr0Bfh4SxarnUuTyGJf6Fe3JyxsZw==
+"@notabug/peer@^0.39.3":
+  version "0.39.3"
+  resolved "https://registry.yarnpkg.com/@notabug/peer/-/peer-0.39.3.tgz#8ee5fb5fabb5f092a866bf49711267628df0c0a5"
+  integrity sha512-kI/OG6ktGygS17OzNI6tVMiOSxzhgmPzAcsjo41aLejX8Ayrt+aUh9STNMNc/jL9yfdYaAjffsMYLPb7DJGCTw==
   dependencies:
     "@notabug/gun-scope" "^0.10.2"
     argon2 "^0.21.0"
