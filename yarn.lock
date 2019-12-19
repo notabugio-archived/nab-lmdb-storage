@@ -311,10 +311,10 @@
     route-parser "^0.0.5"
     sha.js "^2.4.11"
 
-"@chaingun/lmdb-adapter@^0.0.10":
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/@chaingun/lmdb-adapter/-/lmdb-adapter-0.0.10.tgz#ca85ea51132efaa897078fcb6d91a21d3fab338e"
-  integrity sha512-xCCvb91HLA1Nc8fYKVydq2jZAaCfWoIEdzUZ7fIbfVMwn4JTx9FKwgXVIdOVHE1VlU/JyUJhliJoZepnH2z45Q==
+"@chaingun/lmdb-adapter@^0.0.11":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@chaingun/lmdb-adapter/-/lmdb-adapter-0.0.11.tgz#7882753a269781ad41135b10b5dcb96041ec84ed"
+  integrity sha512-v7ck08iKYyZQGOumAOimbmzqNmlWzNQfoaP85YdNzu0qTboubrtF4snD4YxuqBzCJx0iebZC7OKy4L/+Z7P3XQ==
   dependencies:
     "@chaingun/crdt" "^0.0.1"
     "@chaingun/types" "^0.0.4"
